@@ -1,0 +1,278 @@
+====================================================
+LINUX SYSLOG SECURITY MONITORING LAB
+Syslog Analysis Commands Reference
+====================================================
+
+Project:
+Linux-Syslog-Security-Monitoring-Lab
+
+Objective:
+Perform security monitoring, authentication log analysis,
+failed login detection, privileged account auditing,
+event correlation, and incident investigation using
+native Linux log analysis tools.
+
+Platform:
+Ubuntu 24.04 LTS
+
+====================================================
+SECTION 1 – SYSTEM VALIDATION
+====================================================
+
+# Display hostname
+hostname
+
+# Display current user
+whoami
+
+# Display Ubuntu version
+lsb_release -a
+
+# Display kernel version
+uname -r
+
+# Display system uptime
+uptime
+
+====================================================
+SECTION 2 – RSYSLOG SERVICE VERIFICATION
+====================================================
+
+# Check rsyslog service status
+systemctl status rsyslog
+
+# Start rsyslog service
+sudo systemctl start rsyslog
+
+# Enable rsyslog at boot
+sudo systemctl enable rsyslog
+
+# Restart rsyslog service
+sudo systemctl restart rsyslog
+
+====================================================
+SECTION 3 – RSYSLOG CONFIGURATION ANALYSIS
+====================================================
+
+# Open rsyslog configuration
+sudo nano /etc/rsyslog.conf
+
+# Search for module configuration
+grep "module" /etc/rsyslog.conf
+
+# Search for included configurations
+grep "IncludeConfig" /etc/rsyslog.conf
+
+====================================================
+SECTION 4 – LOG DIRECTORY ANALYSIS
+====================================================
+
+# Navigate to log directory
+cd /var/log
+
+# List available log files
+ls -lh
+
+# Display log file sizes
+du -sh *
+
+====================================================
+SECTION 5 – SYSLOG ANALYSIS
+====================================================
+
+# Open syslog file
+sudo less /var/log/syslog
+
+# Display latest syslog events
+sudo tail -50 /var/log/syslog
+
+# Display first 50 syslog entries
+sudo head -50 /var/log/syslog
+
+# Search for systemd events
+grep "systemd" /var/log/syslog
+
+# Search for CRON events
+grep "CRON" /var/log/syslog
+
+# Search for kernel events
+grep "kernel" /var/log/syslog
+
+====================================================
+SECTION 6 – AUTHENTICATION LOG ANALYSIS
+====================================================
+
+# Open authentication log
+sudo less /var/log/auth.log
+
+# Display latest authentication events
+sudo tail -50 /var/log/auth.log
+
+# Search for login events
+grep "session opened" /var/log/auth.log
+
+# Search for logout events
+grep "session closed" /var/log/auth.log
+
+# Search for authentication failures
+grep "authentication failure" /var/log/auth.log
+
+# Search for incorrect password attempts
+grep "incorrect password" /var/log/auth.log
+
+# Search for root account activity
+grep "user root" /var/log/auth.log
+
+# Search for sudo activity
+grep "sudo" /var/log/auth.log
+
+====================================================
+SECTION 7 – FAILED LOGIN DETECTION
+====================================================
+
+# Detect authentication failures
+grep "authentication failure" /var/log/auth.log
+
+# Detect failed password attempts
+grep "incorrect password" /var/log/auth.log
+
+# Detect all failure events
+grep "failure" /var/log/auth.log
+
+# Count authentication failures
+awk '/authentication failure/ {print $0}' \
+/var/log/auth.log | wc -l
+
+====================================================
+SECTION 8 – ROOT ACCESS MONITORING
+====================================================
+
+# Identify root sessions
+grep "session opened for user root" \
+/var/log/auth.log
+
+# Count root access events
+grep "session opened for user root" \
+/var/log/auth.log | wc -l
+
+====================================================
+SECTION 9 – SUDO ACTIVITY ANALYSIS
+====================================================
+
+# Review sudo events
+grep "sudo" /var/log/auth.log
+
+# Count sudo events
+grep "sudo" /var/log/auth.log | wc -l
+
+====================================================
+SECTION 10 – LOG SUMMARIZATION
+====================================================
+
+# Most frequent syslog event sources
+awk '{print $5}' /var/log/syslog \
+| sort | uniq -c | sort -nr | head
+
+# Most frequent authentication events
+awk '{print $5}' /var/log/auth.log \
+| sort | uniq -c | sort -nr | head
+
+# Count login sessions
+grep "session opened" /var/log/auth.log | wc -l
+
+====================================================
+SECTION 11 – SECURITY INVESTIGATION COMMANDS
+====================================================
+
+# Search all authentication failures
+grep -i "authentication failure" \
+/var/log/auth.log
+
+# Search all root account activity
+grep -i "root" /var/log/auth.log
+
+# Search all login sessions
+grep -i "session opened" /var/log/auth.log
+
+# Search all failed password attempts
+grep -i "incorrect password" \
+/var/log/auth.log
+
+====================================================
+SECTION 12 – MITRE ATT&CK MAPPING
+====================================================
+
+Observed Security Event:
+Authentication Failure
+
+MITRE ATT&CK:
+T1110 – Brute Force
+
+Description:
+Adversaries attempt to gain access by guessing passwords.
+
+----------------------------------------------------
+
+Observed Security Event:
+Incorrect Password Attempts
+
+MITRE ATT&CK:
+T1110.001 – Password Guessing
+
+Description:
+Repeated attempts to authenticate using guessed passwords.
+
+----------------------------------------------------
+
+Observed Security Event:
+Root Account Access
+
+MITRE ATT&CK:
+T1078 – Valid Accounts
+
+Description:
+Use of legitimate credentials to access systems.
+
+----------------------------------------------------
+
+Observed Security Event:
+Sudo Activity
+
+MITRE ATT&CK:
+T1098 – Account Manipulation
+
+Description:
+Use or modification of privileged account permissions.
+
+----------------------------------------------------
+
+Observed Security Event:
+User Session Monitoring
+
+MITRE ATT&CK:
+T1033 – System Owner/User Discovery
+
+Description:
+Monitoring user activity and account usage.
+
+====================================================
+SECTION 13 – SOC ANALYST SKILLS DEMONSTRATED
+====================================================
+
+✓ Linux Log Analysis
+✓ Syslog Monitoring
+✓ Authentication Monitoring
+✓ Failed Login Detection
+✓ Root Access Auditing
+✓ Sudo Activity Investigation
+✓ Event Correlation
+✓ Threat Detection
+✓ Incident Investigation
+✓ MITRE ATT&CK Mapping
+✓ Security Monitoring
+✓ Log Parsing
+✓ Risk Assessment
+
+====================================================
+END OF FILE
+====================================================
